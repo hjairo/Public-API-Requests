@@ -20,12 +20,18 @@ let fetchData = (url) => {
 		.then(res => res.json())
 		.catch(error => console.log('Looks like there was a problem!', error));
 };
-const dataFetched = fetchData('https://randomuser.me/api/?results=12&nat=us&inc=picture,name,email,location,phone,dob');
-dataFetched
-	.then(data => generateCards(data));
+fetchData('https://randomuser.me/api/?results=12&nat=us&inc=picture,name,email,location,dob,cell')
+	.then(data => {
+		generateCards(data);
+		generateModal(data);
+	});
 
-dataFetched
-	.then(data => generateModal(data));
+// const dataFetched = fetchData('https://randomuser.me/api/?results=12&nat=us&inc=picture,name,email,location,dob,cell');
+// dataFetched
+// 	.then(data => generateCards(data));
+
+// dataFetched
+// 	.then(data => generateModal(data));
 
 
 // Employee card generator. Takes the data from the fetch function and generates the cards with the appropriate information.
@@ -69,6 +75,7 @@ let employeeModal = (event) => {
 let generateModal = (data) => {
 	let employees = data.results;
 	employees.forEach(person => {
+	console.log(person)
 	let birthday = person.dob.date.substring(0,10);
 	birthday = birthday.split('-')[1] + '/' + birthday.split('-')[2] + '/' + birthday.split('-')[0];
 	const modal = `
@@ -81,7 +88,7 @@ let generateModal = (data) => {
                     <p class="modal-text">${person.email}</p>
                     <p class="modal-text cap">${person.location.city}</p>
                     <hr>
-                    <p class="modal-text">${person.phone}</p>
+                    <p class="modal-text">${person.cell}</p>
                     <p class="modal-text">${person.location.street.number} ${person.location.street.name}, ${person.location.city}, ${person.location.state} ${person.location.postcode}</p>
                     <p class="modal-text">Birthday: ${birthday}</p>
                 </div>
