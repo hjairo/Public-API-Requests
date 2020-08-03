@@ -75,7 +75,6 @@ let employeeModal = (event) => {
 let generateModal = (data) => {
 	let employees = data.results;
 	employees.forEach(person => {
-	console.log(person)
 	let birthday = person.dob.date.substring(0,10);
 	birthday = birthday.split('-')[1] + '/' + birthday.split('-')[2] + '/' + birthday.split('-')[0];
 	const modal = `
